@@ -6,7 +6,6 @@ export async function main(event, context, callback) {
     TableName: 'OneTimeEvent',
     Key: {
       EventId: event.pathParameters.id,
-      EventStartDateTime: '2017-08-2 18:30',
     },
   };
 
