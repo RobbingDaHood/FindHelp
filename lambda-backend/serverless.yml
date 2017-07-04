@@ -1,0 +1,68 @@
+service: lambda-backend
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpackIncludeModules: true
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: prod
+  region: us-west-2
+  
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+
+functions:
+  createUser:
+    handler: users/create.main
+    events:
+      - http:
+          path: users
+          method: post
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+  getUser:
+    handler: users/get.main
+    events:
+      - http:
+          path: users
+          method: get
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+            
+            
+  createOneTimeEvent:
+    handler: oneTimeEvents/create.main
+    events:
+      - http:
+          path: oneTimeEvents
+          method: post
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+  getOneTimeEvent:
+    # Defines an HTTP API endpoint that calls the main function in get.js
+    # - path: url path is /notes/{id}
+    # - method: GET request
+    handler: oneTimeEvents/get.main
+    events:
+      - http:
+          path: oneTimeEvents/{id}
+          method: get
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm

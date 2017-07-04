@@ -1,0 +1,10 @@
+{
+  "body": "{\"EventStartDateTime\":\"2017-08-2 18:30\", \"Title\":\"Testing Event\", \"Description\":\"Testing Event!\"}",
+  "requestContext": {
+    "authorizer": {
+      "claims": {
+        "sub": "USER-SUB-1234"
+      }
+    }
+  }
+}

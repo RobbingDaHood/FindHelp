@@ -1,0 +1,10 @@
+{
+  "body": "{\"content\":[1,2,3],\"owns\":[1,2,3]}",
+  "requestContext": {
+    "authorizer": {
+      "claims": {
+        "sub": "USER-SUB-1234"
+      }
+    }
+  }
+}
