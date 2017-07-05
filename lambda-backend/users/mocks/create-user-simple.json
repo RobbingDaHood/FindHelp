@@ -1,5 +1,5 @@
 {
-  "body": "{\"content\":[1,2,3],\"owns\":[1,2,3]}",
+  "body": "{\"content\":[1,2,3],\"owns\":[1,2]}",
   "requestContext": {
     "authorizer": {
       "claims": {

@@ -8,6 +8,7 @@ export async function main(event, context, callback) {
     TableName: 'OneTimeEvent',
     Item: {
       EventId: uuid.v1(),
+      OwnerId: event.requestContext.authorizer.claims.sub,
       EventStartDateTime: data.EventStartDateTime,
       Title: data.Title,
       Description: data.Description,

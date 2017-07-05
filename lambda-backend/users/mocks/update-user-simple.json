@@ -1,4 +1,5 @@
 {
+  "body": "{\"Owns\":[1,2],\"Joined\":[1,2,3,4],\"Content\":\"Some real text\"}",
   "pathParameters": {
     "id": "USER-SUB-1234"
   },

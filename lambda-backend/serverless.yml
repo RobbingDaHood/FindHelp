@@ -38,13 +38,29 @@ functions:
     handler: users/get.main
     events:
       - http:
-          path: users
+          path: users/{id}
           method: get
           cors: true
           authorizer:
             arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
-            
-            
+  updateUser:
+    handler: users/update.main
+    events:
+      - http:
+          path: users/{id}
+          method: put
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+  deleteUser:
+    handler: users/delete.main
+    events:
+      - http:
+          path: users/{id}
+          method: delete
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
   createOneTimeEvent:
     handler: oneTimeEvents/create.main
     events:
@@ -55,9 +71,6 @@ functions:
           authorizer:
             arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
   getOneTimeEvent:
-    # Defines an HTTP API endpoint that calls the main function in get.js
-    # - path: url path is /notes/{id}
-    # - method: GET request
     handler: oneTimeEvents/get.main
     events:
       - http:
@@ -66,3 +79,21 @@ functions:
           cors: true
           authorizer:
             arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+  updateOneTimeEvent:
+    handler: oneTimeEvents/update.main
+    events:
+      - http:
+          path: oneTimeEvents/{id}
+          method: put
+          cors: true
+          authorizer:
+            arn: rn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+  deleteOneTimeEvent:
+    handler: oneTimeEvents/delete.main
+    events:
+      - http:
+          path: oneTimeEvents/{id}
+          method: delete
+          cors: true
+          authorizer:
+            arn: rn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm

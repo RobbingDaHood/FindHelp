@@ -5,19 +5,13 @@ export async function main(event, context, callback) {
   const params = {
     TableName: 'Users',
     Key: {
-      UserId: event.pathParameters.id,
+      UserId: event.requestContext.authorizer.claims.sub,
     },
   };
 
   try {
-    const result = await dynamoDbLib.call('get', params);
-    if (result.Item) {
-      // Return the retrieved item
-      callback(null, success(result.Item));
-    }
-    else {
-      callback(null, failure({status: false, error: 'Item not found.'}));
-    }
+    const result = await dynamoDbLib.call('delete', params);
+    callback(null, success({status: true}));
   }
   catch(e) {
     callback(null, failure({status: false}));

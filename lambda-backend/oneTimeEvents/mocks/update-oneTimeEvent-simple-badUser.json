@@ -1,0 +1,13 @@
+{
+  "body": "{\"EventStartDateTime\":\"2017-08-2 19:00\",\"Title\":\"Later Testing Event\",\"Description\":\"Later Testing Event!!\"}",
+  "pathParameters": {
+    "id": "773c01e0-61ac-11e7-ab4d-e1327190fda9"
+  },
+  "requestContext": {
+    "authorizer": {
+      "claims": {
+        "sub": "BadUser"
+      }
+    }
+  }
+}
