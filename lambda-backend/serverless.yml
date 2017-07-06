@@ -87,7 +87,7 @@ functions:
           method: put
           cors: true
           authorizer:
-            arn: rn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
   deleteOneTimeEvent:
     handler: oneTimeEvents/delete.main
     events:
@@ -96,4 +96,4 @@ functions:
           method: delete
           cors: true
           authorizer:
-            arn: rn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
