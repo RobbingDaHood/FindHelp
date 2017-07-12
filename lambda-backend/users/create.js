@@ -1,9 +1,8 @@
-import uuid from 'uuid';
-import * as dynamoDbLib from '../libs/dynamodb-lib';
-import { success, failure } from '../libs/response-lib';
+import * as dynamoDbLib from '../libs/dynamodb-lib'
+import { success, failure } from '../libs/response-lib'
 
-export async function main(event, context, callback) {
-  const data = JSON.parse(event.body);
+export async function main (event, context, callback) {
+  const data = JSON.parse(event.body)
   const params = {
     TableName: 'Users',
     Item: {
@@ -11,15 +10,14 @@ export async function main(event, context, callback) {
       Content: data.content,
       Owns: data.owns,
       Joined: data.joined,
-      CreatedAt: new Date().getTime(),
-    },
-  };
+      CreatedAt: new Date().getTime()
+    }
+  }
 
   try {
-    const result = await dynamoDbLib.call('put', params);
-    callback(null, success(params.Item));
-  }
-  catch(e) {
-    callback(null, failure({status: false}));
+    await dynamoDbLib.call('put', params)
+    callback(null, success(params.Item))
+  } catch (e) {
+    callback(null, failure({status: false}))
   }
 };
