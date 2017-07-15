@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import './Home.css';
+import React, {Component} from 'react'
+import './Home.css'
 
 class Home extends Component {
-  render() {
+  render () {
     return (
-      <div className="Home">
-        <div className="lander">
+      <div className='Home'>
+        <div className='lander'>
           <h1>Happy to Help</h1>
           <p>A simple note taking app</p>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Home;
+export default Home

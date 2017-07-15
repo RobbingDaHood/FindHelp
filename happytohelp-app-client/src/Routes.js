@@ -1,15 +1,14 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import NotFound from './containers/NotFound';
+import React from 'react'
+import { Route, Switch } from 'react-router-dom'
+import NotFound from './containers/NotFound'
+import Home from './containers/Home'
+import Login from './containers/Login'
 
-import Home from './containers/Home';
-
-export default () => (
+export default () => ( // eslint-disable-line react/display-name 
   <Switch>
-    <Route path="/" exact component={Home} />
-	
-	{ /* Finally, catch all unmatched routes */ }
+    <Route path='/' exact component={Home} />
+    <Route path='/login' exact component={Login} />
+    { /* Finally, catch all unmatched routes */ }
     <Route component={NotFound} />
-
   </Switch>
-);
+)
