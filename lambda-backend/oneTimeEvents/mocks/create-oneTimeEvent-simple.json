@@ -1,5 +1,5 @@
 {
-  "body": "{\"EventStartDateTime\":\"2017-08-2 18:30\", \"Title\":\"Testing Event\", \"Description\":\"Testing Event!\"}",
+  "body": "{\"EventStartDateTime\":\"2017-08-2 18:30\", \"Title\":\"Testing Event\", \"Description\":\"Testing Event!\", \"GeoPointHash\":\"11111111\"}",
   "requestContext": {
     "authorizer": {
       "claims": {

@@ -7,7 +7,8 @@ export async function main (event, context, callback) {
   const params = {
     TableName: 'OneTimeEvent',
     Item: {
-      EventId: uuid.v1(),
+      HashKey: data.GeoPointHash,
+      RangeKey: uuid.v1(),
       OwnerId: event.requestContext.authorizer.claims.sub,
       EventStartDateTime: data.EventStartDateTime,
       Title: data.Title,
@@ -20,6 +21,6 @@ export async function main (event, context, callback) {
     await dynamoDbLib.call('put', params)
     callback(null, success(params.Item))
   } catch (e) {
-    callback(null, failure({status: false}))
+    callback(null, failure(e))
   }
 };

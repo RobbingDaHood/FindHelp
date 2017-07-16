@@ -2,6 +2,7 @@ import * as dynamoDbLib from '../libs/dynamodb-lib'
 import { success, failure } from '../libs/response-lib'
 
 export async function main (event, context, callback) {
+  var res = event.pathParameters.id.split('&')
   const data = JSON.parse(event.body)
   const params = {
     TableName: 'OneTimeEvent',
@@ -9,7 +10,8 @@ export async function main (event, context, callback) {
     // - 'userId': User Pool sub of the authenticated user
     // - 'noteId': path parameter
     Key: {
-      EventId: event.pathParameters.id
+      HashKey: res[0],
+      RangeKey: res[1]
     },
     ConditionExpression: 'OwnerId = :OwnerId',
     UpdateExpression: 'SET EventStartDateTime = :EventStartDateTime, Title = :Title, Description = :Description',

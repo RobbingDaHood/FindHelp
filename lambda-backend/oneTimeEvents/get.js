@@ -2,10 +2,13 @@ import * as dynamoDbLib from '../libs/dynamodb-lib'
 import { success, failure } from '../libs/response-lib'
 
 export async function main (event, context, callback) {
+  var res = event.pathParameters.id.split('&')
+
   const params = {
     TableName: 'OneTimeEvent',
     Key: {
-      EventId: event.pathParameters.id
+      HashKey: res[0],
+      RangeKey: res[1]
     }
   }
 
@@ -18,6 +21,6 @@ export async function main (event, context, callback) {
       callback(null, failure({status: false, error: 'Item not found.'}))
     }
   } catch (e) {
-    callback(null, failure({status: false}))
+    callback(null, failure(e))
   }
 };
