@@ -3,7 +3,7 @@ import { success, failure } from '../libs/response-lib'
 
 export async function main (event, context, callback) {
   var res = event.pathParameters.id.split('&')
-  
+
   const params = {
     TableName: 'OneTimeEvent',
     Key: {

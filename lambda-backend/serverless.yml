@@ -11,7 +11,7 @@ provider:
   runtime: nodejs6.10
   stage: prod
   region: us-west-2
-  
+
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -94,6 +94,15 @@ functions:
       - http:
           path: oneTimeEvents/{id}
           method: delete
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+  listOneTimeEvent:
+    handler: oneTimeEvents/list.main
+    events:
+      - http:
+          path: oneTimeEvents
+          method: get
           cors: true
           authorizer:
             arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
