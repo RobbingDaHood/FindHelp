@@ -5,7 +5,7 @@ export async function main (event, context, callback) {
   var res = event.pathParameters.id.split('&')
   const data = JSON.parse(event.body)
   const params = {
-    TableName: 'OneTimeEvent',
+    TableName: 'OneTimeEvents',
     // 'Key' defines the partition key and sort key of the item to be updated
     // - 'userId': User Pool sub of the authenticated user
     // - 'noteId': path parameter

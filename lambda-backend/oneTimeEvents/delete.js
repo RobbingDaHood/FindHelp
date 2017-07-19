@@ -5,7 +5,7 @@ export async function main (event, context, callback) {
   var res = event.pathParameters.id.split('&')
 
   const params = {
-    TableName: 'OneTimeEvent',
+    TableName: 'OneTimeEvents',
     Key: {
       HashKey: res[0],
       RangeKey: res[1]
