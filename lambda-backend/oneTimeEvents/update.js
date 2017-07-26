@@ -14,12 +14,13 @@ export async function main (event, context, callback) {
       RangeKey: res[1]
     },
     ConditionExpression: 'OwnerId = :OwnerId',
-    UpdateExpression: 'SET EventStartDateTime = :EventStartDateTime, Title = :Title, Description = :Description',
+    UpdateExpression: 'SET EventStartDateTime = :EventStartDateTime, Title = :Title, Description = :Description, UpdatedAt = :UpdatedAt',
     ExpressionAttributeValues: {
       ':EventStartDateTime': data.EventStartDateTime ? data.EventStartDateTime : null,
       ':Title': data.Title ? data.Title : null,
       ':Description': data.Description ? data.Description : null,
-      ':OwnerId': event.requestContext.authorizer.claims.sub
+      ':OwnerId': event.requestContext.authorizer.claims.sub,
+      ':UpdatedAt': new Date().getTime()
     },
     ReturnValues: 'ALL_NEW'
   }

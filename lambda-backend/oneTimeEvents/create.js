@@ -13,7 +13,8 @@ export async function main (event, context, callback) {
       EventStartDateTime: data.EventStartDateTime,
       Title: data.Title,
       Description: data.Description,
-      createdAt: new Date().getTime()
+      CreatedAt: new Date().getTime(),
+      UpdatedAt: new Date().getTime()
     }
   }
 
