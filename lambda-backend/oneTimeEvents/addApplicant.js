@@ -14,9 +14,9 @@ export async function main (event, context, callback) {
       HashKey: res[0],
       RangeKey: res[1]
     },
-    UpdateExpression: 'SET aps = list_append(aps, :testing)',
+    UpdateExpression: 'SET Applicants = list_append(Applicants, :newApplicant)',
     ExpressionAttributeValues: {
-      ':testing': [event.requestContext.authorizer.claims.sub]
+      ':newApplicant': [event.requestContext.authorizer.claims.sub]
     },
     ReturnValues: 'ALL_NEW'
   }
