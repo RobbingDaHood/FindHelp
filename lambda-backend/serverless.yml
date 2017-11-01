@@ -106,3 +106,12 @@ functions:
           cors: true
           authorizer:
             arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
+  addApplicant:
+    handler: oneTimeEvents/addApplicant.main
+    events:
+      - http:
+          path: oneTimeEvents/{id}/applicants
+          method: post
+          cors: true
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:297507385750:userpool/us-west-2_coHVEsjMm
