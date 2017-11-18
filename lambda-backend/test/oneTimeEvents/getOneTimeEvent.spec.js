@@ -8,8 +8,10 @@ const expect = mochaPlugin.chai.expect
 let wrappedGet = mochaPlugin.getWrapper('getOneTimeEvent', './../../oneTimeEvents/get.js', 'main')
 let wrappedCreate = mochaPlugin.getWrapper('createOneTimeEvent', './../../oneTimeEvents/create.js', 'main')
 
-describe('getOneTimeEvent', () => {
-  it('Createe then get OneTimeEvent', () => {
+describe('Create then get OneTimeEvent', () => {
+  let HashKey
+  let RangeKey
+  it('Create OneTimeEvent', () => {
     return wrappedCreate.run({
       requestContext: {
         authorizer: {
@@ -18,22 +20,25 @@ describe('getOneTimeEvent', () => {
           }
         }
       },
-      body: "{\"EventStartDateTime\":\"2017-08-2 18:30\", \"Title\":\"Testing Event\", \"Description\":\"Testing Event!\", \"GeoPointHash\":\"11111111\"}"
+      body: '{"EventStartDateTime":"2017-08-2 18:30", "Title":"Testing Event", "Description":"Testing Event!", "GeoPointHash":"11111111"}'
+    }).then((response) => {
+      const body = JSON.parse(response.body)
+      HashKey = body.HashKey
+      RangeKey = body.RangeKey
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(200)
+      //console.log('Response: ' + JSON.stringify(response, null, 4))
+    })
+  })
+
+  it('Get OneTimeEvent', () => {
+    return wrappedGet.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      }
     }).then((response) => {
       expect(response).to.not.be.empty
       expect(response.statusCode).to.equal(200)
-      console.log('Response: ' + JSON.stringify(response, null, 4))
-
-
-      //  return wrappedGet.run({
-      //  pathParameters: {
-      //    id: '11111111&dfc183b0-bf36-11e7-a162-cd5dd432a35b'
-      //  }
-      //}).then((response) => {
-      //  expect(response).to.not.be.empty
-      //  expect(response.statusCode).to.equal(200)
-      //    // console.log('Response: ' + JSON.stringify(response, null, 4) );
-      //})
     })
   })
 })
