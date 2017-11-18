@@ -7,8 +7,10 @@ const mochaPlugin = require('serverless-mocha-plugin')
 const expect = mochaPlugin.chai.expect
 let wrappedGet = mochaPlugin.getWrapper('getOneTimeEvent', './../../oneTimeEvents/get.js', 'main')
 let wrappedCreate = mochaPlugin.getWrapper('createOneTimeEvent', './../../oneTimeEvents/create.js', 'main')
+let wrappedUpdate = mochaPlugin.getWrapper('updateOneTimeEvent', './../../oneTimeEvents/update.js', 'main')
+let wrappedDelete = mochaPlugin.getWrapper('deleteOneTimeEvent', './../../oneTimeEvents/delete.js', 'main')
 
-describe('Create then get OneTimeEvent', () => {
+describe('CRUD OneTimeEvent', () => {
   let HashKey
   let RangeKey
   it('Create OneTimeEvent', () => {
@@ -27,18 +29,133 @@ describe('Create then get OneTimeEvent', () => {
       RangeKey = body.RangeKey
       expect(response).to.not.be.empty
       expect(response.statusCode).to.equal(200)
-      //console.log('Response: ' + JSON.stringify(response, null, 4))
+      expect(body.Title).to.equal('Testing Event')
+      // console.log('Response: ' + JSON.stringify(response, null, 4))
     })
   })
 
-  it('Get OneTimeEvent', () => {
+  it('Read OneTimeEvent', () => {
     return wrappedGet.run({
       pathParameters: {
         id: HashKey + '&' + RangeKey
+      }
+    }).then((response) => {
+      const body = JSON.parse(response.body)
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(200)
+      expect(body.Title).to.equal('Testing Event')
+    })
+  })
+
+  it('Update OneTimeEvent', () => {
+    return wrappedUpdate.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      },
+      requestContext: {
+        authorizer: {
+          claims: {
+            sub: 'USER-SUB-1234'
+          }
+        }
+      },
+      body: '{"EventStartDateTime":"2017-08-2 18:30", "Title":"Testing Event!!!", "Description":"Testing Event!", "GeoPointHash":"11111111"}'
+    }).then((response) => {
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(200)
+    })
+  })
+
+  it('Read OneTimeEvent after update', () => {
+    return wrappedGet.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      }
+    }).then((response) => {
+      const body = JSON.parse(response.body)
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(200)
+      expect(body.Title).to.equal('Testing Event!!!')
+    })
+  })
+
+  it('Update OneTimeEvent Wrong user!', () => {
+    return wrappedUpdate.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      },
+      requestContext: {
+        authorizer: {
+          claims: {
+            sub: 'USER-SUB-4321'
+          }
+        }
+      },
+      body: '{"EventStartDateTime":"2017-08-2 18:30", "Title":"Testing Event", "Description":"Testing Event!", "GeoPointHash":"11111111"}'
+    }).then((response) => {
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(500)
+    })
+  })
+
+  it('Read OneTimeEvent after failed update', () => {
+    return wrappedGet.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      }
+    }).then((response) => {
+      const body = JSON.parse(response.body)
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(200)
+      expect(body.Title).to.equal('Testing Event!!!')
+    })
+  })
+
+  it('Delete OneTimeEvent Wrong user!', () => {
+    return wrappedDelete.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      },
+      requestContext: {
+        authorizer: {
+          claims: {
+            sub: 'USER-SUB-4321'
+          }
+        }
+      }
+    }).then((response) => {
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(500)
+    })
+  })
+
+  it('Delete OneTimeEvent', () => {
+    return wrappedDelete.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      },
+      requestContext: {
+        authorizer: {
+          claims: {
+            sub: 'USER-SUB-1234'
+          }
+        }
       }
     }).then((response) => {
       expect(response).to.not.be.empty
       expect(response.statusCode).to.equal(200)
     })
   })
+
+  it('Fail reading deleted OneTimeEvent', () => {
+    return wrappedGet.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      }
+    }).then((response) => {
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(500)
+    })
+  })
+
 })
