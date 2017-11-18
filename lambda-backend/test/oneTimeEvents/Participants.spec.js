@@ -59,10 +59,46 @@ describe('Participant OneTimeEvent', () => {
             sub: 'USER-SUB-1234'
           }
         }
-      }
+      },
+      body: '{"Participant":"USER-SUB-1234"}'
     }).then((response) => {
+      //console.log('Response: ' + JSON.stringify(response, null, 4))
       expect(response).to.not.be.empty
       expect(response.statusCode).to.equal(200)
+    })
+  })
+
+  it('Read OneTimeEvent: 1 Participant', () => {
+    return wrappedGet.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      }
+    }).then((response) => {
+      //console.log('Response: ' + JSON.stringify(response, null, 4))
+      const body = JSON.parse(response.body)
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(200)
+      expect(body.Participants.length).to.equal(1)
+    })
+  })
+
+  it('Add Participant OneTimeEvent: Bad user', () => {
+    return wrappedAddParticipant.run({
+      pathParameters: {
+        id: HashKey + '&' + RangeKey
+      },
+      requestContext: {
+        authorizer: {
+          claims: {
+            sub: 'USER-SUB-1234421'
+          }
+        }
+      },
+      body: '{"Participant":"USER-SUB-1234"}'
+    }).then((response) => {
+      //console.log('Response: ' + JSON.stringify(response, null, 4))
+      expect(response).to.not.be.empty
+      expect(response.statusCode).to.equal(500)
     })
   })
 

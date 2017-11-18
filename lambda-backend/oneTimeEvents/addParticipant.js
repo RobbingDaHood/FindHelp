@@ -16,9 +16,9 @@ export async function main (event, context, callback) {
       RangeKey: res[1]
     },
     ConditionExpression: 'OwnerId = :OwnerId',
-    UpdateExpression: 'SET Participan = list_append(Participan, :newParticipan)',
+    UpdateExpression: 'SET Participants = list_append(Participants, :newParticipant)',
     ExpressionAttributeValues: {
-      ':newParticipan': [body.Participan],
+      ':newParticipant': [body.Participant],
       ':OwnerId': event.requestContext.authorizer.claims.sub
     },
     ReturnValues: 'ALL_NEW'
