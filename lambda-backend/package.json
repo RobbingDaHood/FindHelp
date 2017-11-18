@@ -4,7 +4,7 @@
   "description": "A starter project for the Serverless Framework with ES7 support",
   "main": "handler.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register testing/**/**.spec.js"
+    "test": "mocha --compilers js:babel-core/register test/**/**.spec.js"
   },
   "author": "",
   "license": "MIT",
@@ -24,6 +24,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "js-yaml": "^3.10.0",
     "mocha": "^4.0.1",
+    "serverless-mocha-plugin": "^1.7.0",
     "serverless-webpack": "^3.1.2",
     "webpack": "^2.7.0",
     "webpack-node-externals": "^1.6.0"
