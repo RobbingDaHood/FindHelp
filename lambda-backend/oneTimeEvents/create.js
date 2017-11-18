@@ -14,6 +14,7 @@ export async function main (event, context, callback) {
       Title: body.Title,
       Description: body.Description,
       Applicants: [],
+      Participants: [],
       CreatedAt: new Date().getTime(),
       UpdatedAt: new Date().getTime()
     }
